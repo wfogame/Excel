@@ -3,15 +3,18 @@ const XLSX = require('xlsx');
 const express = require('express')
 const app = express();
 const port = 3000;
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+
 
 
 app.use(express.static('public'));
 
-app.post('/upload/import', (req, res) => {
-    let file = req.body
-    let workbook = XLSX.read(file);
-    console.log(workbook);
-    res.send(workbook);
+app.post('/upload/import', upload.single('file'), (req, res) => {
+     let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+    let sheetName = workbook.SheetNames[0];
+    let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    res.json(jsonData);
 
 })
 

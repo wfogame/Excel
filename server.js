@@ -124,24 +124,32 @@ app.post('/upload/sql', upload.single('file'), (req, res) => {
   let sheetName = workbook.SheetNames[0];
   let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
   let cleanData = cleanExcelData(jsonData);
-  let errors = validateData(cleanData);
 
-  if (errors.length > 0) {
-    return res.status(400).json({ errors });
+  if (!cleanData.length) {
+    return res.status(400).send('No data found in Excel file.');
   }
 
-  // Insert each row into the database
-  const stmt = db.prepare("INSERT INTO data (Name, RawData) VALUES (?, ?)");
+  // Get columns from the first row
+  const columns = Object.keys(cleanData[0]);
+  const tableName = 'excel_data'; // You can change this
+
+  // Generate CREATE TABLE statement
+  let sql = `CREATE TABLE IF NOT EXISTS ${tableName} (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n`;
+  sql += columns.map(col => `  [${col}] TEXT`).join(',\n') + '\n);\n\n';
+
+  // Generate INSERT statements
   cleanData.forEach(row => {
-    stmt.run(row.Name, JSON.stringify(row));
+    const values = columns.map(col => {
+      const val = row[col] == null ? '' : row[col].toString().replace(/'/g, "''");
+      return `'${val}'`;
+    });
+    sql += `INSERT INTO ${tableName} (${columns.map(col => `[${col}]`).join(', ')}) VALUES (${values.join(', ')});\n`;
   });
-  stmt.finalize();
 
-  res.json({ message: 'Data inserted into SQL database.' });
-})
-
-
-
+  res.setHeader('Content-Type', 'application/sql');
+  res.setHeader('Content-Disposition', 'attachment; filename="excel_data.sql"');
+  res.send(sql);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

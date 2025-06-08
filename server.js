@@ -4,6 +4,8 @@ const express = require('express')
 const app = express();
 const port = 3000;
 const multer = require('multer');
+const PDFDocument = require('pdfkit');
+const sqlite3 = require('sqlite3').verbose();
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
@@ -12,7 +14,15 @@ const upload = multer({
   }
 });
 
+const db = new sqlite3.Database('./excel_data.db');
 
+// Create table if not exists (adjust columns as needed)
+db.run(`CREATE TABLE IF NOT EXISTS data (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  Name TEXT,
+  /* Add other columns as needed */
+  RawData TEXT
+)`);
 
 app.use(express.static('public'));
 
@@ -75,23 +85,59 @@ res.send('invalid'+e)
 
 })
 
-app.post('/upload/pdf',upload.single('file'),(req,res)=>{
+app.post('/upload/pdf', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded');
+  }
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment; filename="report.pdf"');
 
-if (!req.file) {
-  return res.status(400).send('No file uploaded');
-}
+  let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+  let sheetName = workbook.SheetNames[0];
+  let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+  let cleanData = cleanExcelData(jsonData);
+  let errors = validateData(cleanData);
 
+  const doc = new PDFDocument();
+  doc.pipe(res);
 
-         let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
-    let sheetName = workbook.SheetNames[0];
-    let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-     let cleanData = cleanExcelData(jsonData);
-    let errors = validateData(cleanData);
+  doc.fontSize(20).text('Excel to PDF Report', { align: 'center' });
 
-    res.json({
-        cleanData,
-        errors
-});
+  // Add errors section
+  doc.fontSize(16).text('Data Issues:', { underline: true });
+  errors.forEach(err => {
+    doc.text(`• Row ${err.row}: ${err.message}`);
+  });
+
+  // Add data table
+  doc.addPage();
+  doc.fontSize(16).text('Processed Data', { align: 'center' });
+
+  doc.end();
+})
+
+app.post('/upload/sql', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded');
+  }
+  let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+  let sheetName = workbook.SheetNames[0];
+  let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+  let cleanData = cleanExcelData(jsonData);
+  let errors = validateData(cleanData);
+
+  if (errors.length > 0) {
+    return res.status(400).json({ errors });
+  }
+
+  // Insert each row into the database
+  const stmt = db.prepare("INSERT INTO data (Name, RawData) VALUES (?, ?)");
+  cleanData.forEach(row => {
+    stmt.run(row.Name, JSON.stringify(row));
+  });
+  stmt.finalize();
+
+  res.json({ message: 'Data inserted into SQL database.' });
 })
 
 

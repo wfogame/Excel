@@ -17,7 +17,8 @@ body {
   text-align: center;
 }
 
-#controls button, #controls input[type="file"] {
+#controls button,
+#controls input[type="file"] {
   margin: 10px;
   padding: 10px 20px;
   font-size: 1rem;
@@ -26,27 +27,38 @@ body {
 }
 
 #controls button {
-  background: #b5838d;
+  background: #f1a663;
   color: #fff;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.6s;
 }
 
 #controls button:hover {
   background: #ffb4a2;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(255, 123, 0, 0.384);
 }
 
-#status {
-  text-align: center;
-  margin: 20px;
-  color: #6d6875;
+#controls button:active {
+  background: #f58c31;
 }
 
-#output {
-  margin: 30px auto;
-  max-width: 800px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 20px;
+.custom-file-label {
+  display: inline-block;
+  background: #f1a663;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.6s;
+}
+.custom-file-label:hover {
+  background: #ffb4a2;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(255, 123, 0, 0.384);
+}
+.custom-file-label:active {
+  background: #f58c31;
 }

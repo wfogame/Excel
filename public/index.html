@@ -11,16 +11,15 @@
         <h1>Excel Hell Solution</h1>
     </div>
     <div id="controls">
-        <button onclick="jsonfile()">Download as JSON</button>
-        <button onclick="pdffile()">Download as PDF</button>
-        <input type="file" id="fileInput">
+        <button id="jsonBtn" onclick="jsonfile()">Download as JSON</button>
+        <button id="pdfBtn" onclick="pdffile()">Download as PDF</button>
+        <label for="fileInput" class="custom-file-label">Choose File</label>
+        <input type="file" id="fileInput" style="display:none;">
     </div>
-    <div id="status">
-        <!-- Status messages will go here -->
-    </div>
-    <div id="output">
-        <!-- Output or results can be shown here -->
-    </div>
+    
+
+
+    
     <script src="script.js"></script>
 </body>
 </html>

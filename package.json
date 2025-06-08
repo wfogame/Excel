@@ -1,6 +1,7 @@
 {
   "name": "excel-hell-fixer",
   "version": "1.0.0",
+  "private": true,
   "description": "Fixes the problem of Excel Hell which is a vaild problem in many, many, industries.",
   "keywords": [
     "Excel",
@@ -19,11 +20,20 @@
     "type": "git",
     "url": "git+https://github.com/wfogame/Excel-Hell-s-FIX.git"
   },
-  "license": "",
+  "license": "All Rights Reserved",
   "author": "wfogame (github account)",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "multer": "^2.0.1",
+    "xlsx": "^0.18.5"
   }
 }

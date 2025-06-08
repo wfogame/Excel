@@ -1,16 +1,33 @@
 body {
   background: #f5ebe0;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', 'Roboto', 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
+  font-weight: 550;
 }
 
-#header {
-  background: #6d6875;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-}
+ #header {
+        background: linear-gradient(90deg, #f1a663 0%, #ffb4a2 100%);
+        color: #fff;
+        padding: 32px 0 24px 0;
+        text-align: center;
+        box-shadow: 0 6px 24px rgba(241, 166, 99, 0.25);
+      
+          display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      #header h1 {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        margin: 0;
+        font-weight: 800;
+        text-shadow: 0 2px 8px rgba(245, 140, 49, 0.18);
+                margin-left: 22px;
+
+      }
+
+
 
 #controls {
   margin: 30px auto;
@@ -24,6 +41,7 @@ body {
   font-size: 1rem;
   border-radius: 5px;
   border: none;
+  font-weight: 550;
 }
 
 #controls button {

@@ -4,23 +4,82 @@ const express = require('express')
 const app = express();
 const port = 3000;
 const multer = require('multer');
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.includes('spreadsheet')) cb(null, true);
+    else cb(new Error('Invalid file type'), false);
+  }
+});
 
 
 
 app.use(express.static('public'));
 
+function cleanExcelData(data) {
+  return data
+    .filter(row => {
+      // Remove empty rows
+      return Object.values(row).some(val => val !== "");
+    })
+    .map(row => {
+      const cleanRow = {};
+      for (const [key, value] of Object.entries(row)) {
+        // Clean keys and values
+        const cleanKey = key.toString().trim();
+        
+        // Clean different value types
+        let cleanValue;
+        if (typeof value === 'string') {
+          cleanValue = value.trim().replace(/\s+/g, ' ');
+        } else if (value instanceof Date) {
+          cleanValue = value.toISOString().split('T')[0]; // Format dates
+        } else {
+          cleanValue = value;
+        }
+        
+        cleanRow[cleanKey] = cleanValue;
+      }
+      return cleanRow;
+    });
+}
+
+function validateData(data) {
+  const errors = [];
+  data.forEach((row, i) => {
+    // Add validation logic here
+    if (!row.Name) errors.push({row: i+1, message: "Missing Name"});
+  });
+  return errors;
+}
+
+
+
+
 app.post('/upload/json', upload.single('file'), (req, res) => {
+
+    try {
      let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
     let sheetName = workbook.SheetNames[0];
     let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
 
     res.json(jsonData);
+    }catch(e){
+
+
+res.send('invalid'+e)
+
+    }
+
 
 })
 
-app.post('/upload/pdf',upload.single('file',(req,res)=>{
+app.post('/upload/pdf',upload.single('file'),(req,res)=>{
+
+if (!req.file) {
+  return res.status(400).send('No file uploaded');
+}
 
 
          let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
@@ -29,11 +88,11 @@ app.post('/upload/pdf',upload.single('file',(req,res)=>{
      let cleanData = cleanExcelData(jsonData);
     let errors = validateData(cleanData);
 
-    res.send(
+    res.json({
         cleanData,
         errors
-    );
-}))
+});
+})
 
 
 
@@ -42,6 +101,10 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Server error');
+});
 
 
 app.use((req, res, next) => {

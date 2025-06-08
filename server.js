@@ -105,9 +105,13 @@ app.post('/upload/pdf', upload.single('file'), (req, res) => {
 
   // Add errors section
   doc.fontSize(16).text('Data Issues:', { underline: true });
-  errors.forEach(err => {
-    doc.text(`• Row ${err.row}: ${err.message}`);
-  });
+  if (errors.length === 0) {
+    doc.text('No issues found.');
+  } else {
+    errors.forEach(err => {
+      doc.text(`• Row ${err.row}: ${err.message}`);
+    });
+  }
 
   // Add data table
   doc.addPage();

@@ -10,13 +10,33 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(express.static('public'));
 
-app.post('/upload/import', upload.single('file'), (req, res) => {
+app.post('/upload/json', upload.single('file'), (req, res) => {
      let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
     let sheetName = workbook.SheetNames[0];
     let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+
     res.json(jsonData);
 
 })
+
+app.post('/upload/pdf',upload.single('file',(req,res)=>{
+
+
+         let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+    let sheetName = workbook.SheetNames[0];
+    let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+     let cleanData = cleanExcelData(jsonData);
+    let errors = validateData(cleanData);
+
+    res.send(
+        cleanData,
+        errors
+    );
+}))
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

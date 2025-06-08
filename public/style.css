@@ -1,0 +1,52 @@
+body {
+  background: #f5ebe0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  background: #6d6875;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+#controls {
+  margin: 30px auto;
+  text-align: center;
+}
+
+#controls button, #controls input[type="file"] {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+#controls button {
+  background: #b5838d;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#controls button:hover {
+  background: #ffb4a2;
+}
+
+#status {
+  text-align: center;
+  margin: 20px;
+  color: #6d6875;
+}
+
+#output {
+  margin: 30px auto;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 20px;
+}

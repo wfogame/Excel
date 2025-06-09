@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySQL Cheat Sheet</title>
+    <style>
+        :root {
+            --primary: #00796b;
+            --primary-light: #009688;
+            --secondary: #f57c00;
+            --light: #f9f9f9;
+            --dark: #333;
+            --gray: #e0e0e0;
+            --success: #4caf50;
+            --danger: #f44336;
+            --info: #2196f3;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .command {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            border-radius: 0 5px 5px 0;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        th {
+            background-color: var(--primary-light);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(0, 150, 136, 0.05);
+        }
+        
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning {
+            background: #ffecb3;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .danger {
+            background: #ffebee;
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin: 0 2px;
+            vertical-align: middle;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MySQL Cheat Sheet</h1>
+            <p>Essential commands and syntax for database management</p>
+        </header>
+        
+        <div class="grid">
+            <!-- Installation & Setup -->
+            <div class="card">
+                <div class="card-header">Installation & Setup</div>
+                <div class="card-body">
+                    <div class="command">
+                        # Ubuntu/Debian<br>
+                        sudo apt update && sudo apt install mysql-server
+                    </div>
+                    <div class="command">
+                        # CentOS/RHEL<br>
+                        sudo yum install mysql-server
+                    </div>
+                    <div class="command">
+                        # macOS<br>
+                        brew install mysql
+                    </div>
+                    <div class="command">
+                        # Windows: Download from mysql.com
+                    </div>
+                    <div class="command">
+                        # Start service<br>
+                        sudo systemctl start mysql  # Linux<br>
+                        brew services start mysql  # macOS
+                    </div>
+                    <div class="command">
+                        # Secure installation<br>
+                        sudo mysql_secure_installation
+                    </div>
+                    <div class="note">
+                        <strong>Note:</strong> After installation, run security script to set root password and secure your instance.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Connection & Basic Commands -->
+            <div class="card">
+                <div class="card-header">Connection & Basic Commands</div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>mysql -u [user] -p</td>
+                            <td>Connect locally</td>
+                        </tr>
+                        <tr>
+                            <td>mysql -h [host] -u [user] -p</td>
+                            <td>Connect to remote server</td>
+                        </tr>
+                        <tr>
+                            <td>SHOW DATABASES;</td>
+                            <td>List all databases</td>
+                        </tr>
+                        <tr>
+                            <td>USE [database];</td>
+                            <td>Select database</td>
+                        </tr>
+                        <tr>
+                            <td>SHOW TABLES;</td>
+                            <td>List tables in current database</td>
+                        </tr>
+                        <tr>
+                            <td>DESC [table];</td>
+                            <td>Describe table structure</td>
+                        </tr>
+                        <tr>
+                            <td>SOURCE file.sql;</td>
+                            <td>Execute SQL file</td>
+                        </tr>
+                        <tr>
+                            <td>EXIT or \q</td>
+                            <td>Quit MySQL shell</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Database Operations -->
+            <div class="card">
+                <div class="card-header">Database Operations</div>
+                <div class="card-body">
+                    <div class="command">
+                        CREATE DATABASE db_name;
+                    </div>
+                    <div class="command">
+                        DROP DATABASE db_name;
+                    </div>
+                    <div class="command">
+                        ALTER DATABASE db_name CHARACTER SET utf8mb4;
+                    </div>
+                    <div class="command">
+                        SHOW CREATE DATABASE db_name;
+                    </div>
+                    <div class="warning">
+                        <strong>Warning:</strong> DROP DATABASE permanently deletes all data. Use with caution!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Table Operations -->
+            <div class="card">
+                <div class="card-header">Table Operations</div>
+                <div class="card-body">
+                    <div class="command">
+                        CREATE TABLE users (<br>
+                        &nbsp;&nbsp;id INT AUTO_INCREMENT PRIMARY KEY,<br>
+                        &nbsp;&nbsp;name VARCHAR(50) NOT NULL,<br>
+                        &nbsp;&nbsp;email VARCHAR(100) UNIQUE,<br>
+                        &nbsp;&nbsp;age INT CHECK (age >= 18),<br>
+                        &nbsp;&nbsp;created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP<br>
+                        );
+                    </div>
+                    <div class="command">
+                        ALTER TABLE users ADD COLUMN phone VARCHAR(15);
+                    </div>
+                    <div class="command">
+                        ALTER TABLE users DROP COLUMN age;
+                    </div>
+                    <div class="command">
+                        ALTER TABLE users MODIFY COLUMN name VARCHAR(100);
+                    </div>
+                    <div class="command">
+                        DROP TABLE users;
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CRUD Operations -->
+            <div class="card">
+                <div class="card-header">CRUD Operations</div>
+                <div class="card-body">
+                    <div class="command">
+                        -- INSERT<br>
+                        INSERT INTO users (name, email) <br>
+                        VALUES ('Alice', 'alice@example.com');
+                    </div>
+                    <div class="command">
+                        -- SELECT<br>
+                        SELECT * FROM users;<br>
+                        SELECT name, email FROM users WHERE age > 25;<br>
+                        SELECT DISTINCT name FROM users;
+                    </div>
+                    <div class="command">
+                        -- UPDATE<br>
+                        UPDATE users SET email = 'new@email.com' WHERE id = 1;
+                    </div>
+                    <div class="command">
+                        -- DELETE<br>
+                        DELETE FROM users WHERE id = 3;
+                    </div>
+                    <div class="warning">
+                        <strong>Important:</strong> Always use WHERE clause with UPDATE and DELETE to avoid modifying all rows!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Query Clauses -->
+            <div class="card">
+                <div class="card-header">Query Clauses</div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>Clause</th>
+                            <th>Example</th>
+                            <th>Purpose</th>
+                        </tr>
+                        <tr>
+                            <td>WHERE</td>
+                            <td>WHERE age >= 21 AND country = 'US'</td>
+                            <td>Filter records</td>
+                        </tr>
+                        <tr>
+                            <td>ORDER BY</td>
+                            <td>ORDER BY created_at DESC</td>
+                            <td>Sort results</td>
+                        </tr>
+                        <tr>
+                            <td>LIMIT</td>
+                            <td>LIMIT 10 OFFSET 20</td>
+                            <td>Pagination</td>
+                        </tr>
+                        <tr>
+                            <td>GROUP BY</td>
+                            <td>GROUP BY department</td>
+                            <td>Group rows</td>
+                        </tr>
+                        <tr>
+                            <td>HAVING</td>
+                            <td>HAVING COUNT(*) > 5</td>
+                            <td>Filter groups</td>
+                        </tr>
+                        <tr>
+                            <td>LIKE</td>
+                            <td>WHERE name LIKE 'J%'</td>
+                            <td>Pattern matching</td>
+                        </tr>
+                        <tr>
+                            <td>IN</td>
+                            <td>WHERE id IN (1,5,7)</td>
+                            <td>Multiple value check</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Joins -->
+            <div class="card">
+                <div class="card-header">Joins</div>
+                <div class="card-body">
+                    <div class="command">
+                        -- INNER JOIN<br>
+                        SELECT orders.id, customers.name <br>
+                        FROM orders <br>
+                        JOIN customers ON orders.customer_id = customers.id;
+                    </div>
+                    <div class="command">
+                        -- LEFT JOIN<br>
+                        SELECT users.name, orders.total <br>
+                        FROM users <br>
+                        LEFT JOIN orders ON users.id = orders.user_id;
+                    </div>
+                    <div class="command">
+                        -- SELF JOIN<br>
+                        SELECT e.name AS employee, m.name AS manager<br>
+                        FROM employees e<br>
+                        JOIN employees m ON e.manager_id = m.id;
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Management -->
+            <div class="card">
+                <div class="card-header">User Management</div>
+                <div class="card-body">
+                    <div class="command">
+                        -- Create User<br>
+                        CREATE USER 'new_user'@'localhost' IDENTIFIED BY 'password';
+                    </div>
+                    <div class="command">
+                        -- Grant Privileges<br>
+                        GRANT SELECT, INSERT ON db.* TO 'user'@'%';<br>
+                        GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost';
+                    </div>
+                    <div class="command">
+                        -- Revoke Privileges<br>
+                        REVOKE DELETE ON db.* FROM 'user'@'%';
+                    </div>
+                    <div class="command">
+                        -- Show Privileges<br>
+                        SHOW GRANTS FOR 'user'@'localhost';
+                    </div>
+                    <div class="note">
+                        <strong>Security Tip:</strong> Always grant minimum required privileges to users
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Cards -->
+        <div class="grid">
+            <!-- Aggregation -->
+            <div class="card">
+                <div class="card-header">Aggregation</div>
+                <div class="card-body">
+                    <div class="command">
+                        SELECT <br>
+                        &nbsp;&nbsp;COUNT(*) AS total_users,<br>
+                        &nbsp;&nbsp;AVG(age) AS average_age,<br>
+                        &nbsp;&nbsp;MAX(salary) AS max_salary,<br>
+                        &nbsp;&nbsp;MIN(created_at) AS first_signup,<br>
+                        &nbsp;&nbsp;SUM(revenue) AS total_revenue<br>
+                        FROM users;
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Indexes & Optimization -->
+            <div class="card">
+                <div class="card-header">Indexes & Optimization</div>
+                <div class="card-body">
+                    <div class="command">
+                        -- Create Index<br>
+                        CREATE INDEX idx_email ON users(email);
+                    </div>
+                    <div class="command">
+                        -- Show Indexes<br>
+                        SHOW INDEXES FROM users;
+                    </div>
+                    <div class="command">
+                        -- Explain Query<br>
+                        EXPLAIN SELECT * FROM users WHERE age > 30;
+                    </div>
+                    <div class="note">
+                        <strong>Tip:</strong> Indexes speed up SELECT queries but slow down INSERT/UPDATE
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Backup & Restore -->
+            <div class="card">
+                <div class="card-header">Backup & Restore</div>
+                <div class="card-body">
+                    <div class="command">
+                        # Export single database<br>
+                        mysqldump -u root -p db_name > backup.sql
+                    </div>
+                    <div class="command">
+                        # Import database<br>
+                        mysql -u root -p db_name < backup.sql
+                    </div>
+                    <div class="command">
+                        # Backup all databases<br>
+                        mysqldump --all-databases > full_backup.sql
+                    </div>
+                    <div class="warning">
+                        <strong>Important:</strong> Regularly backup your databases to prevent data loss
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transactions -->
+            <div class="card">
+                <div class="card-header">Transactions</div>
+                <div class="card-body">
+                    <div class="command">
+                        START TRANSACTION;<br>
+                        UPDATE accounts SET balance = balance - 100 WHERE id = 1;<br>
+                        UPDATE accounts SET balance = balance + 100 WHERE id = 2;<br>
+                        COMMIT;  -- or ROLLBACK to undo
+                    </div>
+                    <div class="note">
+                        <strong>Note:</strong> Use transactions for operations that need to be atomic
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>MySQL Cheat Sheet | Always test commands in development before production | <span class="tag">v8.0</span></p>
+        </div>
+    </div>
+</body>
+</html>

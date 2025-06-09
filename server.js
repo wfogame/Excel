@@ -117,6 +117,23 @@ app.post('/upload/pdf', upload.single('file'), (req, res) => {
   doc.addPage();
   doc.fontSize(16).text('Processed Data', { align: 'center' });
 
+  // Print table headers
+  if (cleanData.length > 0) {
+    const columns = Object.keys(cleanData[0]);
+    doc.moveDown(0.5);
+    doc.fontSize(12).font('Helvetica-Bold').text(columns.join(' | '));
+    doc.moveDown(0.2);
+    doc.font('Helvetica');
+    cleanData.forEach((row, i) => {
+      if (i < 2000000) {
+        const rowText = columns.map(col => row[col] !== undefined ? String(row[col]) : '').join(' | ');
+        doc.text(rowText);
+      }
+    });
+  } else {
+    doc.moveDown().text('No data found.');
+  }
+
   doc.end();
 })
 

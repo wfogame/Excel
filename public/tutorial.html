@@ -6,15 +6,16 @@
     <title>MySQL Cheat Sheet</title>
     <style>
         :root {
-            --primary: #00796b;
-            --primary-light: #009688;
-            --secondary: #f57c00;
+            --primary: #f1a663;
+            --primary-light: #ffb4a2;
+            --secondary: #f3491e;
             --light: #f9f9f9;
             --dark: #333;
             --gray: #e0e0e0;
             --success: #4caf50;
             --danger: #f44336;
             --info: #2196f3;
+            --background: #f5ebe0;
         }
         
         * {
@@ -27,7 +28,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: var(--background);
             padding: 20px;
         }
         
@@ -39,11 +40,11 @@
         header {
             text-align: center;
             padding: 30px 0;
-            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
             border-radius: 10px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(241, 166, 99, 0.25);
         }
         
         header h1 {
@@ -75,7 +76,7 @@
         
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 25px rgba(241, 166, 99, 0.25);
         }
         
         .card-header {
@@ -120,19 +121,19 @@
         }
         
         tr:nth-child(even) {
-            background-color: rgba(0, 150, 136, 0.05);
+            background-color: rgba(255, 180, 162, 0.05);
         }
         
         .note {
-            background: #e3f2fd;
-            border-left: 4px solid var(--info);
+            background: #fcebdc;
+            border-left: 4px solid var(--primary);
             padding: 15px;
             margin: 15px 0;
             border-radius: 0 5px 5px 0;
         }
         
         .warning {
-            background: #ffecb3;
+            background: #f9e0d5;
             border-left: 4px solid var(--secondary);
             padding: 15px;
             margin: 15px 0;
@@ -140,7 +141,7 @@
         }
         
         .danger {
-            background: #ffebee;
+            background: #f9d5d5;
             border-left: 4px solid var(--danger);
             padding: 15px;
             margin: 15px 0;

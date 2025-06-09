@@ -80,3 +80,59 @@ body {
 .custom-file-label:active {
   background: #f58c31;
 }
+
+
+
+
+#nav {
+  margin: 30px auto;
+  text-align: center;
+}
+
+#nav button,
+#nav input[type="file"] {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  font-weight: 550;
+}
+
+#nav button {
+  background: #f5933e;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.6s;
+}
+
+#nav button:hover {
+  background: #f3491e;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(255, 123, 0, 0.384);
+}
+
+#nav button:active {
+  background: #f58c31;
+}
+
+
+.Logo {
+  display: inline-block;
+  padding: 6px;
+  background: #fff;
+  border-radius: 33%;
+  box-shadow: 0 2px 8px rgba(241, 166, 99, 0.18);
+  border: 2px solid #f1a663;
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  vertical-align: middle;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.Logo:hover {
+  box-shadow: 0 5px 18px rgba(241, 166, 99, 0.32);
+  transform: scale(1.07) translateY(-3px);
+  background: linear-gradient(135deg, #f8c08f 0%, #ffb5a270 100%);
+  border-radius: 36%;
+}

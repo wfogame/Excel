@@ -4,60 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel Hell Solution</title>
-    <link rel = 'stylesheet' href = 'style.css'>
-   
+    <style>
+        :root {
+            --primary: #f1a663;
+            --primary-light: #ffb4a2;
+            --secondary: #f3491e;
+            --light: #f9f9f9;
+            --dark: #333;
+            --gray: #e0e0e0;
+            --success: #4caf50;
+            --danger: #f44336;
+            --info: #2196f3;
+            --background: #f5ebe0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--background);
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(241, 166, 99, 0.25);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(241, 166, 99, 0.3);
+        }
+        .nav button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 73, 30, 0.4);
+        }
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav button {
+                width: 80%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        #controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        #controls button, .custom-file-label {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(241, 166, 99, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #controls button:hover, .custom-file-label:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 73, 30, 0.4);
+        }
+        .custom-file-label {
+            cursor: pointer;
+        }
+        #message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-      <div id="header">
-
-        <h1 style="display:flex;align-items:center;gap:16px;">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-                <circle cx="18" cy="18" r="18" fill="#f1a663"/>
-                <path d="M10 18h16M18 10v16" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-            Excel Hell Solution<pre> </pre>
-            
-        </h1>
-
-        <nav>
-            <div id = 'nav'>
-
-                <a href="index.html"><button>Home</button></a>
-                <a href="converter.html"><button>Convertor</button></a>
-
-            </div>
-        </nav>
-
-        <a href = 'https://www.youtube.com/@JustAProgramCreate/videos' target = '_blank'><img class = 'Logo' style = 'position:absolute; top:30px; right:30px' src ="svg/JustAProgram.jpg" alt = 'JustAProgram Logo' width="85" height="85"></a>
+    <div class="nav">
+        <a href="index.html"><button>Home</button></a>
+        <a href="converter.html"><button>Convertor</button></a>
+        <a href="sql.html"><button>Tutorial</button></a>
+        <a href="cheatsheet.html"><button>CheatSheet</button></a>
     </div>
-
-
-
-    <div id="controls">
-        <button id="jsonBtn" onclick="jsonfile()">
-          <img src="svg/download-btn.svg" alt="Download JSON" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
-          Download as JSON
-        </button>
-        <button id="pdfBtn" onclick="pdffile()">
-          <img src="svg/pdf-btn.svg" alt="Download PDF" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
-          Download as PDF
-        </button>
-        <button id="sqlBtn">
-          <img src="svg/sql-btn.svg" alt="Upload to SQL" width="32" height="22.5" style="vertical-align:middle;margin-right:8px;">
-          Upload to SQL
-        </button>
-        <label for="fileInput" class="custom-file-label">
-          <img src="svg/upload-btn.svg" alt="Upload" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
-          Choose File
-        </label>
-        <input type="file" id="fileInput" style="display:none;">
+    <div class="container">
+        <header>
+            <h1>Excel Hell Solution</h1>
+            <p>Convert your Excel data with ease.</p>
+        </header>
+        <div id="controls">
+            <button id="jsonBtn" onclick="jsonfile()">
+                <img src="svg/download-btn.svg" alt="Download JSON" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
+                Download as JSON
+            </button>
+            <button id="pdfBtn" onclick="pdffile()">
+                <img src="svg/pdf-btn.svg" alt="Download PDF" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
+                Download as PDF
+            </button>
+            <button id="sqlBtn">
+                <img src="svg/sql-btn.svg" alt="Upload to SQL" width="32" height="22.5" style="vertical-align:middle;margin-right:8px;">
+                Upload to SQL
+            </button>
+            <label for="fileInput" class="custom-file-label">
+                <img src="svg/upload-btn.svg" alt="Upload" width="20" height="20" style="vertical-align:middle;margin-right:6px;">
+                Choose File
+            </label>
+            <input type="file" id="fileInput" style="display:none;">
+        </div>
+        <div id="message"></div>
+        <!-- ...existing code for main content if any... -->
+        <div class="footer">
+            <p>Excel Hell Solution | <span class="tag">v1.0</span></p>
+        </div>
     </div>
-    <div id="message" style="text-align:center;margin-top:20px;font-weight:bold;"></div>
-    
-
-
-    
     <script src="script.js"></script>
-   
 </body>
 </html>

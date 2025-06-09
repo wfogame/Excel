@@ -175,9 +175,53 @@
                 font-size: 2rem;
             }
         }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(241, 166, 99, 0.3);
+        }
+        
+        .nav button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 73, 30, 0.4);
+        }
+
+        /* Responsive styles for nav */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav button {
+                width: 80%;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="nav">
+        <a href="index.html"><button>Home</button></a>
+        <a href="converter.html"><button>Convertor</button></a>
+        <a href="sql.html"><button>Tutorial</button></a>
+    </div>
+
     <div class="container">
         <header>
             <h1>MySQL Cheat Sheet</h1>

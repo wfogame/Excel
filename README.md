@@ -60,7 +60,7 @@ excel-app
 4. Choose the desired output format (PDF or SQL) to generate reports or export data.
 
 ## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes otherwise, this repository WILL NO LONGER BE UPDATED because I'm tired of this project. Lmao My attention span is so low PLSSS SSS HELP
 
 ## License
 Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.

@@ -27,12 +27,12 @@
             line-height: 1.6;
             color: var(--dark);
             background: var(--background);
-
-            padding-bottom:20px;
+            padding-bottom: 20px;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
         header {
             text-align: center;
@@ -61,9 +61,8 @@
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             border-radius: 5px;
-            width:100%;
-            margin-bottom: 10px;
-
+            width: 100%;
+            margin-bottom: 30px;
         }
         .nav button {
             background: var(--primary);
@@ -81,6 +80,225 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(243, 73, 30, 0.4);
         }
+
+        /* Main content styling */
+        .upload-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .upload-section h2 {
+            color: var(--dark);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .upload-section p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .file-upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, #faf9f7 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, #fff 0%, #f8f5f0 100%);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-area.drag-over {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, #fff8f5 0%, #f0ebe5 100%);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .file-upload-text {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .file-upload-hint {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .conversion-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .conversion-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(241, 166, 99, 0.3);
+            min-width: 120px;
+        }
+
+        .conversion-btn:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(243, 73, 30, 0.4);
+        }
+
+        .conversion-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .message.success {
+            background: #e8f5e8;
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+
+        .message.error {
+            background: #fde8e8;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            display: block;
+        }
+
+        .selected-file {
+            background: #e8f5e8;
+            border: 2px solid var(--success);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .selected-file.show {
+            display: block;
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .file-icon {
+            font-size: 2rem;
+            color: var(--success);
+        }
+
+        .file-details h3 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .file-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        #local-files-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        #local-files-section h2 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #local-files-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #local-files-list li {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        #local-files-list a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            flex-grow: 1;
+        }
+
+        #local-files-list a:hover {
+            color: var(--secondary);
+        }
+
+        .styled-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .styled-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+        }
+
         @media (max-width: 768px) {
             .nav {
                 flex-direction: column;
@@ -92,7 +310,19 @@
             header h1 {
                 font-size: 2rem;
             }
+            .upload-section {
+                padding: 30px 20px;
+            }
+            .conversion-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .conversion-btn {
+                width: 100%;
+                max-width: 250px;
+            }
         }
+
         .footer {
             text-align: center;
             padding: 30px 0;
@@ -109,52 +339,177 @@
         <a href="cheatsheet.html"><button>CheatSheet</button></a>
         <a href="login.html"><button>Login</button></a>
     </div>
+    
     <div class="container">
         <header>
             <h1>Excel Hell Solution</h1>
-            <p>Welcome! Start building your application here.</p>
+            <p>Transform your Excel files into any format with just a few clicks. No more wrestling with spreadsheets!</p>
         </header>
+        
         <main>
-            <section>
-                <p>This is the main content area. Start building your application here.</p>
+            <section class="upload-section">
+                <h2>Upload Your Excel File</h2>
+                <p>Drag and drop your Excel file below, or click to browse. We support .xlsx, .xls, and other spreadsheet formats.</p>
+                
+                <div class="file-upload-area" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📁</div>
+                    <div class="file-upload-text">Click here or drag your Excel file</div>
+                    <div class="file-upload-hint">Supports .xlsx, .xls files</div>
+                </div>
+                
+                <input type="file" id="fileInput" accept=".xlsx,.xls" />
+                
+                <div class="selected-file" id="selectedFile">
+                    <div class="file-info">
+                        <div class="file-icon">📊</div>
+                        <div class="file-details">
+                            <h3 id="fileName">No file selected</h3>
+                            <p id="fileSize">Size: --</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="conversion-buttons">
+                    <button class="conversion-btn" id="jsonBtn" disabled>Convert to JSON</button>
+                    <button class="conversion-btn" id="pdfBtn" disabled>Convert to PDF</button>
+                    <button class="conversion-btn" id="sqlBtn" disabled>Convert to SQL</button>
+                </div>
+                
+                <div class="message" id="message"></div>
             </section>
-            <section id="local-files-section" style="margin-top:30px; display:none;">
-                <h2>Your Local Files (Browser Storage)</h2>
-                <input type="file" id="localFileInput" />
-                <button onclick="clearLocalFiles()" style="margin-left:10px;">Clear All</button>
-                <ul id="local-files-list" style="list-style:none; padding:0;"></ul>
+
+            <section id="local-files-section" style="display:none;">
+                <h2>Your Downloaded Files</h2>
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <input type="file" id="localFileInput" style="display: none;" />
+                    <button class="styled-btn" onclick="document.getElementById('localFileInput').click()">Add File</button>
+                    <button class="styled-btn" onclick="clearLocalFiles()" style="margin-left:10px;">Clear All</button>
+                </div>
+                <ul id="local-files-list"></ul>
             </section>
         </main>
+        
         <div class="footer">
             <p>Excel Hell Solution | <span class="tag">v1.0</span></p>
         </div>
     </div>
+
 <script>
+// File upload functionality
+let upload_type = "";
+let selectedFile = null;
+
+// Drag and drop functionality
+const fileUploadArea = document.querySelector('.file-upload-area');
+const fileInput = document.getElementById('fileInput');
+
+fileUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.add('drag-over');
+});
+
+fileUploadArea.addEventListener('dragleave', () => {
+    fileUploadArea.classList.remove('drag-over');
+});
+
+fileUploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.remove('drag-over');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        handleFileSelection(files[0]);
+    }
+});
+
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        handleFileSelection(e.target.files[0]);
+    }
+});
+
+function handleFileSelection(file) {
+    selectedFile = file;
+    
+    // Show file info
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('fileSize').textContent = `Size: ${(file.size / 1024).toFixed(1)} KB`;
+    document.getElementById('selectedFile').classList.add('show');
+    
+    // Enable conversion buttons
+    document.querySelectorAll('.conversion-btn').forEach(btn => {
+        btn.disabled = false;
+    });
+    
+    // Hide any previous messages
+    const messageEl = document.getElementById('message');
+    messageEl.style.display = 'none';
+    messageEl.className = 'message';
+}
+
+function setUploadType(type) {
+    upload_type = type;
+    if (!selectedFile) {
+        showMessage('Please select a file first.', 'error');
+        return;
+    }
+    handleUpload(selectedFile);
+}
+
+function showMessage(text, type = 'success') {
+    const messageEl = document.getElementById('message');
+    messageEl.textContent = text;
+    messageEl.className = `message ${type}`;
+    messageEl.style.display = 'block';
+    
+    // Auto-hide success messages after 3 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            messageEl.style.display = 'none';
+        }, 3000);
+    }
+}
+
+// Conversion button event listeners
+document.getElementById('jsonBtn').onclick = () => setUploadType('json');
+document.getElementById('pdfBtn').onclick = () => setUploadType('pdf');
+document.getElementById('sqlBtn').onclick = () => setUploadType('sql');
+
 // LocalStorage file management
 const LOCAL_FILES_KEY = 'excel_local_files';
+
 function getLocalFiles() {
     return JSON.parse(localStorage.getItem(LOCAL_FILES_KEY) || '{}');
 }
+
 function saveLocalFile(name, data) {
     const files = getLocalFiles();
     files[name] = data;
     localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
     renderLocalFiles();
 }
+
 function removeLocalFile(name) {
     const files = getLocalFiles();
     delete files[name];
     localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
     renderLocalFiles();
 }
+
 function clearLocalFiles() {
     localStorage.removeItem(LOCAL_FILES_KEY);
     renderLocalFiles();
 }
+
 function renderLocalFiles() {
     const files = getLocalFiles();
     const list = document.getElementById('local-files-list');
     list.innerHTML = '';
+    
+    if (Object.keys(files).length === 0) {
+        list.innerHTML = '<li style="text-align: center; color: #888;">No files stored locally</li>';
+        return;
+    }
+    
     Object.keys(files).forEach(name => {
         const li = document.createElement('li');
         const link = document.createElement('a');
@@ -162,14 +517,17 @@ function renderLocalFiles() {
         link.download = name;
         link.textContent = name;
         li.appendChild(link);
+        
         const delBtn = document.createElement('button');
         delBtn.textContent = 'Delete';
-        delBtn.style.marginLeft = '10px';
+        delBtn.className = 'styled-btn';
         delBtn.onclick = () => removeLocalFile(name);
         li.appendChild(delBtn);
+        
         list.appendChild(li);
     });
 }
+
 document.getElementById('localFileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -180,7 +538,131 @@ document.getElementById('localFileInput').addEventListener('change', function(e)
     reader.readAsDataURL(file);
 });
 
-// Only show local files section if user setting allows
+function handleUpload(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    
+    // Disable buttons during upload
+    document.querySelectorAll('.conversion-btn').forEach(btn => {
+        btn.disabled = true;
+    });
+
+    switch (upload_type) {
+        case "json":
+            fetch(`/upload/json`, {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                const jsonStr = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonStr], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "data.json";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showMessage('JSON file downloaded successfully!', 'success');
+                
+                // Save to LocalStorage
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    saveLocalFile("data.json", evt.target.result);
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch((error) => {
+                showMessage('JSON conversion failed. Please try again.', 'error');
+                console.error("Error:", error);
+            })
+            .finally(() => {
+                // Re-enable buttons
+                document.querySelectorAll('.conversion-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+            });
+            break;
+
+        case "pdf":
+            fetch(`/upload/pdf`, {
+                method: "POST",
+                body: formData,
+            })
+            .then((response) => response.blob())
+            .then((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "report.pdf";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showMessage('PDF file downloaded successfully!', 'success');
+                
+                // Save to LocalStorage
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    saveLocalFile("report.pdf", evt.target.result);
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch((error) => {
+                showMessage('PDF conversion failed. Please try again.', 'error');
+                console.error("Error:", error);
+            })
+            .finally(() => {
+                // Re-enable buttons
+                document.querySelectorAll('.conversion-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+            });
+            break;
+
+        case "sql":
+            fetch(`/upload/sql`, {
+                method: "POST",
+                body: formData,
+            })
+            .then(res => {
+                if (!res.ok) throw new Error('Failed');
+                return res.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'excel_data.sql';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+                showMessage('SQL file downloaded successfully!', 'success');
+                
+                // Save to LocalStorage
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    saveLocalFile('excel_data.sql', evt.target.result);
+                };
+                reader.readAsDataURL(blob);
+            })
+            .catch(() => {
+                showMessage('SQL conversion failed. Please try again.', 'error');
+            })
+            .finally(() => {
+                // Re-enable buttons
+                document.querySelectorAll('.conversion-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+            });
+            break;
+    }
+}
+
+// Check if local files section should be shown
 async function checkShowLocalFilesSetting() {
     try {
         const res = await fetch('/settings');
@@ -196,8 +678,9 @@ async function checkShowLocalFilesSetting() {
         document.getElementById('local-files-section').style.display = 'none';
     }
 }
+
+// Initialize the page
 checkShowLocalFilesSetting();
 </script>
-<script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Hell Solution</title>
+    <style>
+        :root {
+            --primary: #f1a663;
+            --primary-light: #ffb4a2;
+            --secondary: #f3491e;
+            --light: #f9f9f9;
+            --dark: #333;
+            --gray: #e0e0e0;
+            --success: #4caf50;
+            --danger: #f44336;
+            --info: #2196f3;
+            --background: #f5ebe0;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--background);
+
+            padding-bottom:20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(241, 166, 99, 0.25);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 5px;
+            width:100%;
+            margin-bottom: 10px;
+
+        }
+        .nav button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(241, 166, 99, 0.3);
+        }
+        .nav button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 73, 30, 0.4);
+        }
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .nav button {
+                width: 80%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <a href="index.html"><button>Home</button></a>
+        <a href="converter.html"><button>Convertor</button></a>
+        <a href="sql.html"><button>Tutorial</button></a>
+        <a href="cheatsheet.html"><button>CheatSheet</button></a>
+        <a href="login.html"><button>Login</button></a>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Excel Hell Solution</h1>
+            <p>Welcome! Start building your application here.</p>
+        </header>
+        <main>
+            <section>
+                <p>This is the main content area. Start building your application here.</p>
+            </section>
+            <section id="local-files-section" style="margin-top:30px; display:none;">
+                <h2>Your Local Files (Browser Storage)</h2>
+                <input type="file" id="localFileInput" />
+                <button onclick="clearLocalFiles()" style="margin-left:10px;">Clear All</button>
+                <ul id="local-files-list" style="list-style:none; padding:0;"></ul>
+            </section>
+        </main>
+        <div class="footer">
+            <p>Excel Hell Solution | <span class="tag">v1.0</span></p>
+        </div>
+    </div>
+<script>
+// LocalStorage file management
+const LOCAL_FILES_KEY = 'excel_local_files';
+function getLocalFiles() {
+    return JSON.parse(localStorage.getItem(LOCAL_FILES_KEY) || '{}');
+}
+function saveLocalFile(name, data) {
+    const files = getLocalFiles();
+    files[name] = data;
+    localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
+    renderLocalFiles();
+}
+function removeLocalFile(name) {
+    const files = getLocalFiles();
+    delete files[name];
+    localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
+    renderLocalFiles();
+}
+function clearLocalFiles() {
+    localStorage.removeItem(LOCAL_FILES_KEY);
+    renderLocalFiles();
+}
+function renderLocalFiles() {
+    const files = getLocalFiles();
+    const list = document.getElementById('local-files-list');
+    list.innerHTML = '';
+    Object.keys(files).forEach(name => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = files[name];
+        link.download = name;
+        link.textContent = name;
+        li.appendChild(link);
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.style.marginLeft = '10px';
+        delBtn.onclick = () => removeLocalFile(name);
+        li.appendChild(delBtn);
+        list.appendChild(li);
+    });
+}
+document.getElementById('localFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        saveLocalFile(file.name, evt.target.result);
+    };
+    reader.readAsDataURL(file);
+});
+
+// Only show local files section if user setting allows
+async function checkShowLocalFilesSetting() {
+    try {
+        const res = await fetch('/settings');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.storeExcelConversions) {
+            document.getElementById('local-files-section').style.display = '';
+            renderLocalFiles();
+        } else {
+            document.getElementById('local-files-section').style.display = 'none';
+        }
+    } catch {
+        document.getElementById('local-files-section').style.display = 'none';
+    }
+}
+checkShowLocalFilesSetting();
+</script>
+<script src="script.js"></script>
+</body>
+</html>

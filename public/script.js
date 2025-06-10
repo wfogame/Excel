@@ -33,6 +33,12 @@ document.getElementById("fileInput").addEventListener("change", (event) => {
   }
 });
 
+function saveLocalFile(name, dataUrl) {
+  const files = JSON.parse(localStorage.getItem('excel_local_files') || '{}');
+  files[name] = dataUrl;
+  localStorage.setItem('excel_local_files', JSON.stringify(files));
+}
+
 function handleUpload(file) {
   const formData = new FormData();
   formData.append("file", file);
@@ -56,6 +62,12 @@ function handleUpload(file) {
           a.remove();
           URL.revokeObjectURL(url);
           document.getElementById('message').textContent = 'JSON file downloaded!';
+          // Save to LocalStorage
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            saveLocalFile("data.json", evt.target.result);
+          };
+          reader.readAsDataURL(blob);
         })
         .catch((error) => {
           document.getElementById('message').textContent = 'JSON download failed.';
@@ -79,6 +91,12 @@ function handleUpload(file) {
           a.remove();
           URL.revokeObjectURL(url);
           document.getElementById('message').textContent = 'PDF file downloaded!';
+          // Save to LocalStorage
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            saveLocalFile("report.pdf", evt.target.result);
+          };
+          reader.readAsDataURL(blob);
         })
         .catch((error) => {
           document.getElementById('message').textContent = 'PDF download failed.';
@@ -105,6 +123,12 @@ function handleUpload(file) {
           a.remove();
           window.URL.revokeObjectURL(url);
           document.getElementById('message').textContent = 'SQL file downloaded!';
+          // Save to LocalStorage
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            saveLocalFile('excel_data.sql', evt.target.result);
+          };
+          reader.readAsDataURL(blob);
         })
         .catch(() => {
           document.getElementById('message').textContent = 'SQL download failed.';
@@ -112,3 +136,75 @@ function handleUpload(file) {
       break;
   }
 }
+
+// Style for styled buttons
+function createStyledButton(text, onClick) {
+  const btn = document.createElement('button');
+  btn.textContent = text;
+  btn.style.background = 'var(--primary)';
+  btn.style.color = 'white';
+  btn.style.border = 'none';
+  btn.style.padding = '10px 22px';
+  btn.style.borderRadius = '30px';
+  btn.style.fontWeight = '600';
+  btn.style.cursor = 'pointer';
+  btn.style.transition = 'all 0.3s ease';
+  btn.style.marginLeft = '10px';
+  btn.onmouseover = () => {
+    btn.style.background = 'var(--secondary)';
+    btn.style.transform = 'translateY(-2px)';
+    btn.style.boxShadow = '0 5px 15px rgba(243, 73, 30, 0.4)';
+  };
+  btn.onmouseleave = () => {
+    btn.style.background = 'var(--primary)';
+    btn.style.transform = '';
+    btn.style.boxShadow = '0 3px 8px rgba(241, 166, 99, 0.3)';
+  };
+  if (onClick) btn.onclick = onClick;
+  return btn;
+}
+
+// In renderLocalFiles, use styled buttons for Delete
+function renderLocalFiles() {
+  const files = getLocalFiles();
+  const list = document.getElementById('local-files-list');
+  list.innerHTML = '';
+  Object.keys(files).forEach(name => {
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = files[name];
+    link.download = name;
+    link.textContent = name;
+    link.style.marginRight = '10px';
+    li.appendChild(link);
+    const delBtn = createStyledButton('Delete', () => removeLocalFile(name));
+    li.appendChild(delBtn);
+    list.appendChild(li);
+  });
+}
+
+// Style the Clear All button on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const clearBtn = document.querySelector('button[onclick="clearLocalFiles()"]');
+  if (clearBtn) {
+    clearBtn.classList.add('styled-btn');
+    clearBtn.style.background = 'var(--primary)';
+    clearBtn.style.color = 'white';
+    clearBtn.style.border = 'none';
+    clearBtn.style.padding = '10px 22px';
+    clearBtn.style.borderRadius = '30px';
+    clearBtn.style.fontWeight = '600';
+    clearBtn.style.cursor = 'pointer';
+    clearBtn.style.transition = 'all 0.3s ease';
+    clearBtn.onmouseover = () => {
+      clearBtn.style.background = 'var(--secondary)';
+      clearBtn.style.transform = 'translateY(-2px)';
+      clearBtn.style.boxShadow = '0 5px 15px rgba(243, 73, 30, 0.4)';
+    };
+    clearBtn.onmouseleave = () => {
+      clearBtn.style.background = 'var(--primary)';
+      clearBtn.style.transform = '';
+      clearBtn.style.boxShadow = '0 3px 8px rgba(241, 166, 99, 0.3)';
+    };
+  }
+});

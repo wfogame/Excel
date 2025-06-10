@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git+https://github.com/wfogame/Excel-Hell-s-FIX.git"
   },
-  "license": "All Rights Reserved",
+  "license": "SEE LICENSE.md",
   "author": "wfogame (github account)",
   "type": "commonjs",
   "main": "server.js",

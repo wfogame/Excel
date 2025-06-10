@@ -14,26 +14,36 @@ The Excel App is a web application designed to facilitate the upload, processing
 excel-app
 ├── public
 │   ├── index.html        # Main HTML document
+│   ├── cheatsheet.html   # Cheatsheet page
+│   ├── converter.html    # Converter page
+│   ├── idk.html          # Additional page
+│   ├── login.html        # Login page
+│   ├── sql.html          # SQL export page
 │   ├── style.css         # Styles for the application
-│   └── svg               # Directory containing SVG icons
-│       ├── plus-fancy.svg # Fancy "+" symbol for the title
-│       ├── upload-btn.svg # SVG for the upload button
-│       ├── download-btn.svg # SVG for the download button
-│       ├── pdf-btn.svg   # SVG for the PDF button
-│       └── sql-btn.svg   # SVG for the SQL button
+│   ├── script.js         # Client-side JavaScript
+│   └── svg               # Directory containing SVG icons and images
+│       ├── download-btn.svg   # SVG for the download button
+│       ├── pdf-btn.svg        # SVG for the PDF button
+│       ├── sql-btn.svg        # SVG for the SQL button
+│       ├── upload-btn.svg     # SVG for the upload button
+│       ├── upload-sql.svg     # SVG for SQL upload
+│       ├── sd.svg             # Additional SVG icon
+│       └── JustAProgram.jpg   # Image asset
 ├── server.js             # Server-side code for handling requests
 ├── package.json          # NPM configuration file
+├── excel_data.db         # SQLite database file for storing user data ENCODED in top grade HASH
+├── LICENSE.md            # License file
 └── README.md             # Documentation for the project
 ```
 
 ## Installation
 1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/wfogame/Excel-Hell-s-FIX
    ```
 2. Navigate to the project directory:
    ```
-   cd excel-app
+   cd Excel-Hell-s-FIX
    ```
 3. Install the dependencies:
    ```
@@ -53,4 +63,4 @@ excel-app
 Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.

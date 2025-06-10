@@ -421,6 +421,7 @@
             <a href="converter.html"><button>Convertor</button></a>
             <a href="sql.html"><button>Tutorial</button></a>
             <a href="cheatsheet.html"><button>CheatSheet</button></a>
+            <a href="login.html"><button>Login</button></a>
         </div>
     </div>
     
@@ -543,7 +544,12 @@
             <div class="avatar" id="userAvatar">U</div>
             <h2 class="user-name" id="userName">User Name</h2>
             <p class="user-email" id="userEmail">user@example.com</p>
-            
+            <div style="margin: 20px 0;">
+                <label style="font-weight:600;">
+                    <input type="checkbox" id="showLocalFilesToggle" style="margin-right:8px;vertical-align:middle;"> Show Local Files on Home
+                </label>
+                <span id="settingsStatus" style="margin-left:10px;font-size:0.95em;color:var(--success);"></span>
+            </div>
             <button class="btn" id="logoutBtn">Logout</button>
             
             <div class="features">
@@ -740,6 +746,7 @@
             userName.textContent = user.name;
             userEmail.textContent = user.email;
             userAvatar.textContent = user.name ? user.name[0].toUpperCase() : 'U';
+            fetchAndSetSettings();
         }
 
         // Logout logic (server-side)
@@ -766,6 +773,35 @@
                 protectedContent.style.display = 'none';
             }
         }
+
+        // Settings toggle logic
+        async function fetchAndSetSettings() {
+            try {
+                const res = await fetch('/settings');
+                if (!res.ok) return;
+                const data = await res.json();
+                document.getElementById('showLocalFilesToggle').checked = !!data.storeExcelConversions;
+            } catch {}
+        }
+        document.getElementById('showLocalFilesToggle').addEventListener('change', async function() {
+            const checked = this.checked;
+            document.getElementById('settingsStatus').textContent = 'Saving...';
+            try {
+                const res = await fetch('/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ storeExcelConversions: checked })
+                });
+                if (res.ok) {
+                    document.getElementById('settingsStatus').textContent = 'Saved!';
+                    setTimeout(()=>{document.getElementById('settingsStatus').textContent='';}, 1200);
+                } else {
+                    document.getElementById('settingsStatus').textContent = 'Error saving.';
+                }
+            } catch {
+                document.getElementById('settingsStatus').textContent = 'Error saving.';
+            }
+        });
 
         // Init
         setupPasswordToggles();

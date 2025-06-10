@@ -28,6 +28,14 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
   passwordHash TEXT NOT NULL
 )`);
 
+// Add settings table for user preferences
+// (userId, storeExcelConversions)
+db.run(`CREATE TABLE IF NOT EXISTS settings (
+  userId INTEGER PRIMARY KEY,
+  storeExcelConversions INTEGER DEFAULT 0,
+  FOREIGN KEY(userId) REFERENCES users(id)
+)`);
+
 app.use(express.static('public'));
 
 function cleanExcelData(data) {
@@ -244,6 +252,31 @@ app.get('/profile', requireAuth, (req, res) => {
   db.get('SELECT id, name, email FROM users WHERE id = ?', [req.session.userId], (err, user) => {
     if (err || !user) return res.status(404).json({ error: 'User not found.' });
     res.json(user);
+  });
+});
+
+// Update user settings (e.g., whether to store Excel conversions)
+app.post('/settings', requireAuth, (req, res) => {
+  const { storeExcelConversions } = req.body;
+  if (typeof storeExcelConversions === 'undefined') {
+    return res.status(400).json({ error: 'Missing setting.' });
+  }
+  db.run(
+    `INSERT INTO settings (userId, storeExcelConversions) VALUES (?, ?)
+     ON CONFLICT(userId) DO UPDATE SET storeExcelConversions=excluded.storeExcelConversions`,
+    [req.session.userId, storeExcelConversions ? 1 : 0],
+    function(err) {
+      if (err) return res.status(500).json({ error: 'Failed to update settings.' });
+      res.json({ success: true, storeExcelConversions: !!storeExcelConversions });
+    }
+  );
+});
+
+// Get user settings
+app.get('/settings', requireAuth, (req, res) => {
+  db.get('SELECT storeExcelConversions FROM settings WHERE userId = ?', [req.session.userId], (err, row) => {
+    if (err) return res.status(500).json({ error: 'Failed to fetch settings.' });
+    res.json({ storeExcelConversions: !!(row && row.storeExcelConversions) });
   });
 });
 

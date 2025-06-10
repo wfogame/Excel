@@ -118,10 +118,85 @@
             <section>
                 <p>This is the main content area. Start building your application here.</p>
             </section>
+            <section id="local-files-section" style="margin-top:30px; display:none;">
+                <h2>Your Local Files (Browser Storage)</h2>
+                <input type="file" id="localFileInput" />
+                <button onclick="clearLocalFiles()" style="margin-left:10px;">Clear All</button>
+                <ul id="local-files-list" style="list-style:none; padding:0;"></ul>
+            </section>
         </main>
         <div class="footer">
             <p>Excel Hell Solution | <span class="tag">v1.0</span></p>
         </div>
     </div>
+<script>
+// LocalStorage file management
+const LOCAL_FILES_KEY = 'excel_local_files';
+function getLocalFiles() {
+    return JSON.parse(localStorage.getItem(LOCAL_FILES_KEY) || '{}');
+}
+function saveLocalFile(name, data) {
+    const files = getLocalFiles();
+    files[name] = data;
+    localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
+    renderLocalFiles();
+}
+function removeLocalFile(name) {
+    const files = getLocalFiles();
+    delete files[name];
+    localStorage.setItem(LOCAL_FILES_KEY, JSON.stringify(files));
+    renderLocalFiles();
+}
+function clearLocalFiles() {
+    localStorage.removeItem(LOCAL_FILES_KEY);
+    renderLocalFiles();
+}
+function renderLocalFiles() {
+    const files = getLocalFiles();
+    const list = document.getElementById('local-files-list');
+    list.innerHTML = '';
+    Object.keys(files).forEach(name => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = files[name];
+        link.download = name;
+        link.textContent = name;
+        li.appendChild(link);
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.style.marginLeft = '10px';
+        delBtn.onclick = () => removeLocalFile(name);
+        li.appendChild(delBtn);
+        list.appendChild(li);
+    });
+}
+document.getElementById('localFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        saveLocalFile(file.name, evt.target.result);
+    };
+    reader.readAsDataURL(file);
+});
+
+// Only show local files section if user setting allows
+async function checkShowLocalFilesSetting() {
+    try {
+        const res = await fetch('/settings');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.storeExcelConversions) {
+            document.getElementById('local-files-section').style.display = '';
+            renderLocalFiles();
+        } else {
+            document.getElementById('local-files-section').style.display = 'none';
+        }
+    } catch {
+        document.getElementById('local-files-section').style.display = 'none';
+    }
+}
+checkShowLocalFilesSetting();
+</script>
 </body>
 </html>

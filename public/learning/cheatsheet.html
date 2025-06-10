@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animations Demo</title>
+    <style>
+        /* BASIC SETUP STYLES */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .demo-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+
+        .demo-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .demo-box {
+            width: 80px;
+            height: 80px;
+            margin: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* ========================================
+           ANIMATION 1: FADE IN
+           ======================================== */
+        @keyframes fade-in {
+            from { 
+                opacity: 0; 
+            }
+            to { 
+                opacity: 1; 
+            }
+        }
+
+        .fade-box {
+            background: #ff6b6b;
+            animation: fade-in 2s ease-out;
+        }
+
+        /* ========================================
+           ANIMATION 2: SLIDE IN FROM LEFT
+           ======================================== */
+        @keyframes slide-in-left {
+            from { 
+                transform: translateX(-200px); 
+                opacity: 0;
+            }
+            to { 
+                transform: translateX(0); 
+                opacity: 1;
+            }
+        }
+
+        .slide-box {
+            background: #4ecdc4;
+            animation: slide-in-left 1s ease-out;
+        }
+
+        /* ========================================
+           ANIMATION 3: BOUNCE
+           ======================================== */
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40%, 43% {
+                transform: translateY(-30px);
+            }
+            70% {
+                transform: translateY(-15px);
+            }
+            90% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .bounce-box {
+            background: #45b7d1;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* ========================================
+           ANIMATION 4: SPIN
+           ======================================== */
+        @keyframes spin {
+            from { 
+                transform: rotate(0deg); 
+            }
+            to { 
+                transform: rotate(360deg); 
+            }
+        }
+
+        .spin-box {
+            background: #f9ca24;
+            animation: spin 2s linear infinite;
+        }
+
+        /* ========================================
+           ANIMATION 5: PULSE (SCALE)
+           ======================================== */
+        @keyframes pulse {
+            0% { 
+                transform: scale(1); 
+            }
+            50% { 
+                transform: scale(1.2); 
+            }
+            100% { 
+                transform: scale(1); 
+            }
+        }
+
+        .pulse-box {
+            background: #6c5ce7;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* ========================================
+           ANIMATION 6: SHAKE
+           ======================================== */
+        @keyframes shake {
+            0%, 100% { 
+                transform: translateX(0); 
+            }
+            10%, 30%, 50%, 70%, 90% { 
+                transform: translateX(-10px); 
+            }
+            20%, 40%, 60%, 80% { 
+                transform: translateX(10px); 
+            }
+        }
+
+        .shake-box {
+            background: #e17055;
+            animation: shake 0.8s ease-in-out infinite;
+        }
+
+        /* ========================================
+           ANIMATION 7: HOVER EFFECTS
+           ======================================== */
+        @keyframes hover-grow {
+            from { 
+                transform: scale(1); 
+            }
+            to { 
+                transform: scale(1.1); 
+            }
+        }
+
+        .hover-box {
+            background: #00b894;
+            transition: all 0.3s ease;
+        }
+
+        .hover-box:hover {
+            animation: hover-grow 0.3s ease-out forwards;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ========================================
+           ANIMATION 8: COMPLEX MULTI-PROPERTY
+           ======================================== */
+        @keyframes complex-move {
+            0% {
+                transform: translateX(0) rotate(0deg) scale(1);
+                background-color: #fd79a8;
+                border-radius: 10px;
+            }
+            25% {
+                transform: translateX(100px) rotate(90deg) scale(1.2);
+                background-color: #fdcb6e;
+                border-radius: 50%;
+            }
+            50% {
+                transform: translateX(100px) translateY(-50px) rotate(180deg) scale(0.8);
+                background-color: #6c5ce7;
+                border-radius: 10px;
+            }
+            75% {
+                transform: translateX(0) translateY(-50px) rotate(270deg) scale(1.2);
+                background-color: #00cec9;
+                border-radius: 50%;
+            }
+            100% {
+                transform: translateX(0) rotate(360deg) scale(1);
+                background-color: #fd79a8;
+                border-radius: 10px;
+            }
+        }
+
+        .complex-box {
+            background: #fd79a8;
+            animation: complex-move 4s ease-in-out infinite;
+        }
+
+        /* ========================================
+           ANIMATION 9: DELAYED ANIMATIONS
+           ======================================== */
+        @keyframes slide-up {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .delayed-box {
+            background: #74b9ff;
+            opacity: 0;
+            animation: slide-up 0.8s ease-out forwards;
+        }
+
+        .delayed-box:nth-child(1) { animation-delay: 0.1s; }
+        .delayed-box:nth-child(2) { animation-delay: 0.2s; }
+        .delayed-box:nth-child(3) { animation-delay: 0.3s; }
+        .delayed-box:nth-child(4) { animation-delay: 0.4s; }
+        .delayed-box:nth-child(5) { animation-delay: 0.5s; }
+
+        /* ========================================
+           INTERACTIVE CONTROLS
+           ======================================== */
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .control-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           ANIMATION STATES (for JavaScript control)
+           ======================================== */
+        .paused {
+            animation-play-state: paused !important;
+        }
+
+        .fast {
+            animation-duration: 0.5s !important;
+        }
+
+        .slow {
+            animation-duration: 4s !important;
+        }
+
+        /* ========================================
+           CODE DISPLAY
+           ======================================== */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .code-comment {
+            color: #68d391;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 CSS Animations Live Demo</h1>
+        
+        <!-- FADE IN ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">1. Fade In Animation</div>
+            <div class="demo-box fade-box"></div>
+            <div class="code-block">
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.fade-box {
+  animation: fade-in 2s ease-out;
+}
+            </div>
+        </div>
+
+        <!-- SLIDE IN FROM LEFT -->
+        <div class="demo-section">
+            <div class="demo-title">2. Slide In From Left</div>
+            <div class="demo-box slide-box"></div>
+            <div class="code-block">
+@keyframes slide-in-left {
+  from { 
+    transform: translateX(-200px); 
+    opacity: 0;
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1;
+  }
+}
+.slide-box {
+  animation: slide-in-left 1s ease-out;
+}
+            </div>
+        </div>
+
+        <!-- BOUNCE ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">3. Bounce Animation (Infinite Loop)</div>
+            <div class="demo-box bounce-box"></div>
+            <div class="code-block">
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: translateY(0); }
+  40%, 43% { transform: translateY(-30px); }
+  70% { transform: translateY(-15px); }
+  90% { transform: translateY(-4px); }
+}
+.bounce-box {
+  animation: bounce 2s ease-in-out infinite;
+}
+            </div>
+        </div>
+
+        <!-- SPIN ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">4. Spin Animation</div>
+            <div class="demo-box spin-box"></div>
+            <div class="code-block">
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-box {
+  animation: spin 2s linear infinite;
+}
+            </div>
+        </div>
+
+        <!-- PULSE ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">5. Pulse Animation (Scale)</div>
+            <div class="demo-box pulse-box"></div>
+            <div class="code-block">
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.pulse-box {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+            </div>
+        </div>
+
+        <!-- SHAKE ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">6. Shake Animation</div>
+            <div class="demo-box shake-box"></div>
+            <div class="code-block">
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+.shake-box {
+  animation: shake 0.8s ease-in-out infinite;
+}
+            </div>
+        </div>
+
+        <!-- HOVER EFFECT -->
+        <div class="demo-section">
+            <div class="demo-title">7. Hover Effect (Hover over the box!)</div>
+            <div class="demo-box hover-box"></div>
+            <div class="code-block">
+@keyframes hover-grow {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+.hover-box:hover {
+  animation: hover-grow 0.3s ease-out forwards;
+}
+            </div>
+        </div>
+
+        <!-- COMPLEX ANIMATION -->
+        <div class="demo-section">
+            <div class="demo-title">8. Complex Multi-Property Animation</div>
+            <div class="demo-box complex-box"></div>
+            <div class="code-block">
+@keyframes complex-move {
+  0% {
+    transform: translateX(0) rotate(0deg) scale(1);
+    background-color: #fd79a8;
+    border-radius: 10px;
+  }
+  25% {
+    transform: translateX(100px) rotate(90deg) scale(1.2);
+    background-color: #fdcb6e;
+    border-radius: 50%;
+  }
+  <span class="code-comment">/* More keyframes... */</span>
+}
+            </div>
+        </div>
+
+        <!-- DELAYED ANIMATIONS -->
+        <div class="demo-section">
+            <div class="demo-title">9. Delayed Animations (Staggered Effect)</div>
+            <div class="demo-box delayed-box"></div>
+            <div class="demo-box delayed-box"></div>
+            <div class="demo-box delayed-box"></div>
+            <div class="demo-box delayed-box"></div>
+            <div class="demo-box delayed-box"></div>
+            <div class="code-block">
+.delayed-box:nth-child(1) { animation-delay: 0.1s; }
+.delayed-box:nth-child(2) { animation-delay: 0.2s; }
+.delayed-box:nth-child(3) { animation-delay: 0.3s; }
+<span class="code-comment">/* Each box starts slightly later */</span>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="demo-section">
+            <div class="demo-title">10. Animation Controls</div>
+            <div class="controls">
+                <button class="control-btn" onclick="pauseAll()">⏸️ Pause All</button>
+                <button class="control-btn" onclick="playAll()">▶️ Play All</button>
+                <button class="control-btn" onclick="speedUp()">⏩ Speed Up</button>
+                <button class="control-btn" onclick="slowDown()">🐌 Slow Down</button>
+                <button class="control-btn" onclick="resetAll()">🔄 Reset</button>
+            </div>
+            <div class="code-block">
+<span class="code-comment">/* Control animations with JavaScript */</span>
+element.style.animationPlayState = 'paused';
+element.style.animationDuration = '0.5s'; <span class="code-comment">// Speed up</span>
+element.classList.remove('animation-class'); <span class="code-comment">// Reset</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ANIMATION CONTROL FUNCTIONS
+        function pauseAll() {
+            const animatedElements = document.querySelectorAll('.demo-box');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+        }
+
+        function playAll() {
+            const animatedElements = document.querySelectorAll('.demo-box');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }
+
+        function speedUp() {
+            const animatedElements = document.querySelectorAll('.demo-box');
+            animatedElements.forEach(el => {
+                const currentDuration = parseFloat(getComputedStyle(el).animationDuration) || 1;
+                el.style.animationDuration = (currentDuration / 2) + 's';
+            });
+        }
+
+        function slowDown() {
+            const animatedElements = document.querySelectorAll('.demo-box');
+            animatedElements.forEach(el => {
+                const currentDuration = parseFloat(getComputedStyle(el).animationDuration) || 1;
+                el.style.animationDuration = (currentDuration * 2) + 's';
+            });
+        }
+
+        function resetAll() {
+            // Force reflow to restart animations
+            const animatedElements = document.querySelectorAll('.demo-box');
+            animatedElements.forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; // Trigger reflow
+                el.style.animation = null;
+            });
+        }
+
+        // Add click handlers to restart individual animations
+        document.querySelectorAll('.demo-box').forEach(box => {
+            box.addEventListener('click', function() {
+                this.style.animation = 'none';
+                this.offsetHeight; // Trigger reflow
+                this.style.animation = null;
+            });
+        });
+
+        console.log('🎬 CSS Animations Demo Loaded!');
+        console.log('Click any box to restart its animation');
+        console.log('Use the control buttons to pause/play/speed up all animations');
+    </script>
+</body>
+</html>

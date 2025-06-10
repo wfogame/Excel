@@ -58,9 +58,11 @@ excel-app
 2. Open your web browser and navigate to `http://localhost:3000` to access the application.
 3. Use the upload button to select and upload your Excel files.
 4. Choose the desired output format (PDF or SQL) to generate reports or export data.
+5. Remeber delete the following folders: ignore, public/learning public/deprecated public/new
 
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes otherwise, this repository WILL NO LONGER BE UPDATED because I'm tired of this project. Lmao My attention span is so low PLSSS SSS HELP
 
 ## License
 Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.
+

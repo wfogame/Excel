@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style> 
+ 
         :root {
 
             --primary:#8b5cf6;
@@ -35,8 +36,23 @@
             margin-left: 2vw;
             margin-right: 2vw;
 
+
         }
-        
+
+        @keyframes fade-in {
+  0% {
+    opacity: 0;    /* Completely invisible */
+    transform: rotate(0deg);
+  }
+  100% {
+    opacity: 1;    /* Completely visible */
+    transform: rotate(180deg);
+
+  }
+}
+#header {
+  animation: fade-in 2s ease-in-out;
+}
     </style>
 </head>
 <body>

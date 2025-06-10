@@ -6,6 +6,8 @@ const port = 3000;
 const multer = require('multer');
 const PDFDocument = require('pdfkit');
 const sqlite3 = require('sqlite3').verbose();
+const session = require('express-session');
+const bcrypt = require('bcrypt');
 const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
@@ -16,12 +18,14 @@ const upload = multer({
 
 const db = new sqlite3.Database('./excel_data.db');
 
-// Create table if not exists (adjust columns as needed)
-db.run(`CREATE TABLE IF NOT EXISTS data (
+
+// Add users table for authentication
+// (id, name, email, passwordHash)
+db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  Name TEXT,
-  /* Add other columns as needed */
-  RawData TEXT
+  name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  passwordHash TEXT NOT NULL
 )`);
 
 app.use(express.static('public'));
@@ -170,6 +174,77 @@ app.post('/upload/sql', upload.single('file'), (req, res) => {
   res.setHeader('Content-Type', 'application/sql');
   res.setHeader('Content-Disposition', 'attachment; filename="excel_data.sql"');
   res.send(sql);
+});
+
+// Session middleware
+app.use(session({
+  secret: 'your-secret-key', // Change this to a strong secret in production
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Set to true if using HTTPS
+}));
+
+// Body parser for JSON and urlencoded
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Registration endpoint
+app.post('/register', async (req, res) => {
+  const { name, email, password } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'All fields required.' });
+  }
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+  }
+  db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
+    if (err) return res.status(500).json({ error: 'Database error.' });
+    if (user) return res.status(400).json({ error: 'Email already registered.' });
+    const passwordHash = await bcrypt.hash(password, 10);
+    db.run('INSERT INTO users (name, email, passwordHash) VALUES (?, ?, ?)', [name, email, passwordHash], function(err) {
+      if (err) return res.status(500).json({ error: 'Registration failed.' });
+      res.json({ success: true, message: 'Registration successful.' });
+    });
+  });
+});
+
+// Login endpoint
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: 'All fields required.' });
+  }
+  db.get('SELECT * FROM users WHERE email = ?', [email], async (err, user) => {
+    if (err) return res.status(500).json({ error: 'Database error.' });
+    if (!user) return res.status(400).json({ error: 'Invalid credentials.' });
+    const match = await bcrypt.compare(password, user.passwordHash);
+    if (!match) return res.status(400).json({ error: 'Invalid credentials.' });
+    req.session.userId = user.id;
+    res.json({ success: true, message: 'Login successful.', name: user.name, email: user.email });
+  });
+});
+
+// Logout endpoint
+app.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.json({ success: true, message: 'Logged out.' });
+  });
+});
+
+// Middleware to protect routes
+function requireAuth(req, res, next) {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  next();
+}
+
+// Example protected route
+app.get('/profile', requireAuth, (req, res) => {
+  db.get('SELECT id, name, email FROM users WHERE id = ?', [req.session.userId], (err, user) => {
+    if (err || !user) return res.status(404).json({ error: 'User not found.' });
+    res.json(user);
+  });
 });
 
 app.listen(port, () => {

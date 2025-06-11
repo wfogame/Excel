@@ -67,10 +67,11 @@ Contributions are welcome! Please submit a pull request or open an issue for any
 Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.
 
 ## Hosting Purposes For The Internet ( After Obtaining explicit wrritten permmision from wfogame. See LICENSE)
-
-   1. In index.html customize the meta tags to your needs.
-   2. Submit to Google, ( search.google.com/search-console )
-   3. Optional: Add meta tags to the rest of the pages.
-
+   
+   1. Obtain explicit written permision from wfogame.
+   2. In index.html customize the meta tags to your needs.
+   3. Host the website.
+   4. Submit to Google, ( search.google.com/search-console ).
+   5. Optional: Add meta tags to the rest of the pages.
 
 

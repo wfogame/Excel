@@ -9,7 +9,7 @@ You are NOT granted any rights or licenses in this software except for the follo
 - You may NOT claim this software as your own or remove any copyright or attribution notices.
 - You MUST acknowledge "wfogame" as the original creator in any permitted use.
 - Any other use, including but not limited to commercial, governmental, educational, or organizational use, is STRICTLY PROHIBITED without explicit written permission from wfogame.
-- You may NOT host this website ANYWHERE ( including the web ) without explicit written permission from wfogame. ( And if you do host it somewhere, this LICENSE STRICTLY APPLIES and the website's ownership IS NOT YOURS )
+- You may NOT host this website ANYWHERE ( including the web ) without explicit written permission from wfogame.  (Even if you host this software, you acquire NO ownership rights whatsoever in the hosted version, this LICENSE STRICTLY APPLIES to any hosting, and unauthorized hosting constitutes copyright infringement subject to immediate legal action.)
 
 **ANY ATTEMPT TO USE, COPY, MODIFY, DISTRIBUTE, OR COMMERCIALIZE THIS SOFTWARE IN VIOLATION OF THESE TERMS IS STRICTLY FORBIDDEN AND WILL RESULT IN LEGAL ACTION. I AM SERIOUS.**
 

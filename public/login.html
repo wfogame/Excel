@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication System | Excel Hell Solution</title>
-    <link rel="icon" href="/public/svg/JustAProgram.jpg" type="image/x-icon">
+    <link rel="icon" href="svg/upload-btn.svg" type="image/x-icon">
 
     <style>
         :root {
@@ -389,6 +389,15 @@
             font-size: 1.1rem;
         }
         
+        .showLocalFilesToggle input{
+            opacity: 0;
+            
+        }
+        .showLocalFilesToggle input {
+
+        }
+
+        
         @media (max-width: 768px) {
             #header {
                 flex-direction: column;
@@ -547,7 +556,9 @@
             <p class="user-email" id="userEmail">user@example.com</p>
             <div style="margin: 20px 0;">
                 <label style="font-weight:600;">
-                    <input type="checkbox" id="showLocalFilesToggle" style="margin-right:8px;vertical-align:middle;"> Show Local Files on Home
+                    <div class = 'showLocalFilesToggle'>
+                        <input type="checkbox" id="showLocalFilesToggle" style="margin-right:8px;vertical-align:middle;"> Show Local Files on Home
+                    </div> 
                 </label>
                 <span id="settingsStatus" style="margin-left:10px;font-size:0.95em;color:var(--success);"></span>
             </div>

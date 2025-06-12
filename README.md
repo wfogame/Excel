@@ -11,16 +11,12 @@ The Excel App is a web application designed to facilitate the upload, processing
 
 ## Project Structure
 ```
-excel-app
+Excel
 ├── public
 │   ├── index.html        # Main HTML document
 │   ├── cheatsheet.html   # Cheatsheet page
-│   ├── converter.html    # Converter page
-│   ├── idk.html          # Additional page
 │   ├── login.html        # Login page
 │   ├── sql.html          # SQL export page
-│   ├── style.css         # Styles for the application
-│   ├── script.js         # Client-side JavaScript
 │   └── svg               # Directory containing SVG icons and images
 │       ├── download-btn.svg   # SVG for the download button
 │       ├── pdf-btn.svg        # SVG for the PDF button
@@ -31,7 +27,7 @@ excel-app
 │       └── JustAProgram.jpg   # Image asset
 ├── server.js             # Server-side code for handling requests
 ├── package.json          # NPM configuration file
-├── excel_data.db         # SQLite database file for storing user data ENCODED in top grade HASH
+├── excel_data.db         # SQLite database file for storing user data ENCODED in top grade HASH ( Will be made once use )
 ├── LICENSE.md            # License file
 └── README.md             # Documentation for the project
 ```
@@ -61,7 +57,7 @@ excel-app
 5. Remeber delete the following folders: ignore, public/learning public/deprecated public/new
 
 ## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes otherwise, this repository WILL NO LONGER BE UPDATED because I'm tired of this project. Lmao My attention span is so low PLSSS SSS HELP
+Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes otherwise, this repository WILL NO LONGER BE UPDATED because I'm tired of this project. Lmao My attention span is so low PLSSS SSS HELP oh this is no longer updated?
 
 ## License
 Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.
@@ -74,4 +70,21 @@ Your may use this for STRICTLY non-comerical purposes See the LICENSE file for m
    4. Submit to Google, ( search.google.com/search-console ).
    5. Optional: Add meta tags to the rest of the pages.
 
+## IMPORTANT MAJOR SECURITY ISSUES BEFORE HOSTING
 
+Vulnerabilities:
+
+
+secret:'your-secret-key' Not very secure is it?
+
+ 
+
+Manipluation of headers soo.... if (file.mimetype.includes('spreadsheet'))
+ then malcious headers
+
+need to parameterze sql so you odont get SQL injected attacked
+
+
+also cross origin attacks !!!! ned to generate user code or something like that secure user session only code that gets sent with.
+
+So if u guys wnanna commit maybe these issues should be focus cuz otherwise i dont get what somebody would change

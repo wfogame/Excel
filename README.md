@@ -56,35 +56,4 @@ Excel
 4. Choose the desired output format (PDF or SQL) to generate reports or export data.
 5. Remeber delete the following folders: ignore, public/learning public/deprecated public/new
 
-## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes otherwise, this repository WILL NO LONGER BE UPDATED because I'm tired of this project. Lmao My attention span is so low PLSSS SSS HELP oh this is no longer updated?
 
-## License
-Your may use this for STRICTLY non-comerical purposes See the LICENSE file for more details.
-
-## Hosting Purposes For The Internet ( After Obtaining explicit wrritten permmision from wfogame. See LICENSE)
-   
-   1. Obtain explicit written permision from wfogame.
-   2. In index.html customize the meta tags to your needs.
-   3. Host the website.
-   4. Submit to Google, ( search.google.com/search-console ).
-   5. Optional: Add meta tags to the rest of the pages.
-
-## IMPORTANT MAJOR SECURITY ISSUES BEFORE HOSTING
-
-Vulnerabilities:
-
-
-secret:'your-secret-key' Not very secure is it?
-
- 
-
-Manipluation of headers soo.... if (file.mimetype.includes('spreadsheet'))
- then malcious headers
-
-need to parameterze sql so you odont get SQL injected attacked
-
-
-also cross origin attacks !!!! ned to generate user code or something like that secure user session only code that gets sent with.
-
-So if u guys wnanna commit maybe these issues should be focus cuz otherwise i dont get what somebody would change

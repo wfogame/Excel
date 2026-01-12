@@ -1,4 +1,5 @@
 This is vibe codeed soo yeah
+Although this is my most popular project... lol, I want to learn Software dev, not too interested in web dev rn
 # Excel-Hell-s-FIX
 
 ## Overview
@@ -56,6 +57,7 @@ Excel
 3. Use the upload button to select and upload your Excel files.
 4. Choose the desired output format (PDF or SQL) to generate reports or export data.
 5. Remeber delete the following folders: ignore, public/learning public/deprecated public/new
+
 
 
 

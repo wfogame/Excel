@@ -16,6 +16,25 @@ const upload = multer({
   }
 });
 
+// A workbook declares its own sheet range in the <dimension> element, and that
+// element is attacker-controlled metadata: a 2 KB file can declare the whole
+// 1,048,576 x 16,384 grid while holding four cells. SheetJS walks the declared
+// range unless the read is bounded, so bound it here.
+const MAX_IMPORT_ROWS = 10000;
+
+// Read an uploaded workbook with the declared range counted but not walked.
+// SheetJS clips !ref to the rows it actually parsed and keeps the declared range
+// in !fullref; when those differ the sheet is longer than the cap and the route
+// refuses it instead of materialising it.
+function readImportWorkbook(buffer) {
+  const workbook = XLSX.read(buffer, { type: 'buffer', sheetRows: MAX_IMPORT_ROWS + 1 });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  if (sheet && sheet['!fullref'] && sheet['!fullref'] !== sheet['!ref']) {
+    return { tooLarge: true, declaredRows: XLSX.utils.decode_range(sheet['!fullref']).e.r + 1 };
+  }
+  return { json: XLSX.utils.sheet_to_json(sheet) };
+}
+
 const db = new sqlite3.Database('./excel_data.db');
 
 
@@ -81,9 +100,11 @@ function validateData(data) {
 app.post('/upload/json', upload.single('file'), (req, res) => {
 
     try {
-     let workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
-    let sheetName = workbook.SheetNames[0];
-    let jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    const parsed = readImportWorkbook(req.file.buffer);
+    if (parsed.tooLarge) {
+      return res.status(413).json({ error: `Workbook declares ${parsed.declaredRows} rows; the import limit is ${MAX_IMPORT_ROWS}.` });
+    }
+    let jsonData = parsed.json;
 
 
     res.json(jsonData);
